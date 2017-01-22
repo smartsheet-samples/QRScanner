@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Smartsheet Contact Scanner</string>
+    <string name="menu_settings">Settings</string>
+    <string name="menu_clear_cache">Clear Cache</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="label_name">Name</string>
+    <string name="label_email">Email Address</string>
+    <string name="label_org">Organization</string>
+    <string name="label_title">Title</string>
+    <string name="label_raw">Raw QRCode</string>
+
+    <string name="msg_scan_prompt">Scan contact QR Code</string>
+    <string name="msg_set_contact">Please specify contact information before saving.</string>
+    <string name="msg_settings">Make sure you have set your Smartsheet Token and Smartsheet Sheet ID in Settings.</string>
+    <string name="title_saving">Saving...</string>
+    <string name="msg_saving">Saving contact to Smartsheet.</string>
+    <string name="msg_save_success">Contact saved</string>
+    <string name="msg_save_failure">Save failed</string>
+    <string name="msg_cache_clear_success">Cache cleared</string>
+    <string name="msg_cache_clear_failure">Cache clear failed</string>
+
+    <string name="pref_header_general">General</string>
+    <string name="pref_title_token">Smartsheet Token</string>
+    <string name="pref_title_sheet_id">Smartsheet Sheet ID</string>
+
+</resources>
