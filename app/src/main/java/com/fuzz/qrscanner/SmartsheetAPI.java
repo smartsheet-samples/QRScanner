@@ -8,11 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smartsheet.api.Smartsheet;
 import com.smartsheet.api.SmartsheetBuilder;
 import com.smartsheet.api.SmartsheetException;
-import com.smartsheet.api.internal.http.HttpClient;
-import com.smartsheet.api.internal.http.HttpClientException;
-import com.smartsheet.api.internal.http.HttpEntity;
-import com.smartsheet.api.internal.http.HttpRequest;
-import com.smartsheet.api.internal.http.HttpResponse;
+import com.smartsheet.api.internal.http.AndroidHttpClient;
 import com.smartsheet.api.models.Cell;
 import com.smartsheet.api.models.Column;
 import com.smartsheet.api.models.PagedResult;
@@ -21,25 +17,15 @@ import com.smartsheet.api.models.Row;
 import com.smartsheet.api.models.enums.ColumnInclusion;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
-
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 public class SmartsheetAPI {
     // Static vars
-    private static final MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json");
     private static final String ENCODING_UTF8 = "UTF-8";
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private static final TypeReference<List<Column>> TYPE_LIST_COLUMN = new TypeReference<List<Column>>(){};
@@ -174,92 +160,4 @@ public class SmartsheetAPI {
             return null;
         }
     }
-
-    /**
-     * Due to issues with Android support for the standard Apache HttpClient implement our own.
-     */
-    private class AndroidHttpClient implements HttpClient {
-        private final OkHttpClient client;
-        private Response currentResponse;
-
-        private AndroidHttpClient() {
-            this.client = new OkHttpClient.Builder()
-                    .connectTimeout(10, TimeUnit.SECONDS)
-                    .writeTimeout(10, TimeUnit.SECONDS)
-                    .readTimeout(30, TimeUnit.SECONDS)
-                    .build();
-        }
-
-        @Override
-        public HttpResponse request(HttpRequest apiRequest) throws HttpClientException {
-            try {
-                // Make sure any previous response is cleaned up
-                this.closeCurrentResponse();
-
-                // Create our new request
-                Request.Builder builder = new Request.Builder();
-                builder.url(apiRequest.getUri().toURL());
-
-                // Clone our headers to request
-                for (Map.Entry<String, String> entry : apiRequest.getHeaders().entrySet()) {
-                    builder.addHeader(entry.getKey(), entry.getValue());
-                }
-
-                // TODO - implement other HTTP methods as necessary
-                switch(apiRequest.getMethod()) {
-                    case POST:
-                        builder.post(getRequestBody(apiRequest));
-                        break;
-                    case PUT:
-                        builder.put(getRequestBody(apiRequest));
-                        break;
-                }
-
-                // Create API request
-                Request request = builder.build();
-                this.currentResponse = client.newCall(request).execute();
-
-                // Debug
-                Log.d(LOG_TAG, this.currentResponse.peekBody(1000).string());
-
-                // Package response details
-                HttpEntity entity = new HttpEntity();
-                entity.setContentType(this.currentResponse.body().contentType().toString());
-                entity.setContentLength(this.currentResponse.body().contentLength());
-                entity.setContent(this.currentResponse.body().byteStream());
-
-                HttpResponse apiResponse = new HttpResponse();
-                apiResponse.setStatusCode(this.currentResponse.code());
-                apiResponse.setEntity(entity);
-                return apiResponse;
-            } catch (IOException ex) {
-                throw new HttpClientException("Error calling Smartsheet API.", ex);
-            }
-        }
-
-        private RequestBody getRequestBody(HttpRequest apiRequest) throws IOException {
-            return RequestBody.create(MEDIA_TYPE_JSON, IOUtils.toByteArray(apiRequest.getEntity().getContent()));
-        }
-
-        @Override
-        public void releaseConnection() {
-            this.closeCurrentResponse();
-        }
-
-        private void closeCurrentResponse() {
-            Response response = this.currentResponse;
-            if (response != null) {
-                if (response.body() != null) {
-                    response.body().close();
-                }
-                this.currentResponse = null;
-            }
-        }
-
-        @Override
-        public void close() throws IOException {
-            this.client.connectionPool().evictAll();
-        }
-    }
-
 }
