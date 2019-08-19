@@ -1,15 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "25.0.1"
+    compileSdkVersion 29
+    buildToolsVersion "29.0.0"
     defaultConfig {
         applicationId "com.fuzz.qrscanner"
-        minSdkVersion 23
-        targetSdkVersion 24
+        minSdkVersion 26
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -20,23 +20,22 @@ android {
     packagingOptions {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/NOTICE'
+        exclude 'META-INF/DEPENDENCIES'
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile group: 'commons-io', name: 'commons-io', version: '2.5'
-    compile group: 'org.apache.commons', name: 'commons-csv', version: '1.4'
-    compile('com.smartsheet:smartsheet-sdk-java:2.0.5') {
-        exclude group: 'org.apache.httpcomponents', module: 'httpclient'
-    }
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    // implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.2.0', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.journeyapps:zxing-android-embedded:3.4.0'
-    compile 'com.android.support:appcompat-v7:24.2.1'
-    compile 'com.squareup.okhttp3:okhttp:3.5.0'
-    compile 'com.android.support:design:24.2.1'
-    compile 'com.android.support:support-v4:24.2.1'
-    testCompile 'junit:junit:4.12'
+    implementation group: 'com.smartsheet', name: 'smartsheet-sdk-java', version: '2.68.4'
+    implementation group: 'commons-io', name: 'commons-io', version: '2.5'
+    implementation group: 'org.apache.commons', name: 'commons-csv', version: '1.7'
+    implementation group: 'org.slf4j', name: 'slf4j-android', version: '1.7.25'
+    implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    testImplementation 'junit:junit:4.12'
 }
