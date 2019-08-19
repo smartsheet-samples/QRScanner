@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,6 +24,8 @@ import com.google.zxing.client.result.ResultParser;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.smartsheet.api.SmartsheetException;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     // Static vars
@@ -45,7 +47,8 @@ public class MainActivity extends AppCompatActivity {
                 integrator.setOrientationLocked(false);
                 integrator.setBeepEnabled(false);
                 integrator.setBarcodeImageEnabled(true);
-                integrator.initiateScan(IntentIntegrator.QR_CODE_TYPES);
+                integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
+                integrator.initiateScan();
             }
         });
 

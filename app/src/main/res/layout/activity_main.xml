@@ -53,7 +53,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             >
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/txtNameLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -63,15 +63,15 @@
                 android:hint="@string/label_name"
                 >
 
-                <android.support.design.widget.TextInputEditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtName"
                     android:inputType="textPersonName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     />
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/txtEmailLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -82,15 +82,15 @@
                 android:hint="@string/label_email"
                 >
 
-                <android.support.design.widget.TextInputEditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtEmail"
                     android:inputType="textEmailAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     />
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/txtOrgLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -101,15 +101,15 @@
                 android:hint="@string/label_org"
                 >
 
-                <android.support.design.widget.TextInputEditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtOrg"
                     android:inputType="text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     />
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/txtTitleLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -120,15 +120,15 @@
                 android:hint="@string/label_title"
                 >
 
-                <android.support.design.widget.TextInputEditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtTitle"
                     android:inputType="text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     />
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/txtRawLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -139,13 +139,13 @@
                 android:hint="@string/label_raw"
                 >
 
-                <android.support.design.widget.TextInputEditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtRaw"
                     android:inputType="textMultiLine"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     />
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
         </RelativeLayout>
     </ScrollView>
 </RelativeLayout>
